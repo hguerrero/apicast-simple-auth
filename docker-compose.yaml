@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  apicast:
+    container_name: apicast
+    image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel8:3scale2.10
+    env_file:
+      - .env
+    volumes:
+      - ./policies:/opt/app/policies
+      - ./conf/config.json:/opt/app/config.json:ro
+      - ./conf/keys:/opt/app/keys
+    ports:
+      - 8080:8080
+      - 8090:8090

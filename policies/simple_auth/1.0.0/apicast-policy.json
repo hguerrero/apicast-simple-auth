@@ -1,0 +1,10 @@
+{
+    "$schema": "http://apicast.io/policy-v1/schema#manifest#",
+    "name": "Simple Authentication",
+    "summary": "Validates authentication",
+    "description": [
+        "This policy is meant to be just an example."
+    ],
+    "version": "1.0.0",
+    "configuration": {}
+}

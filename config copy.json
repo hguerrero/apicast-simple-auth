@@ -1,0 +1,66 @@
+{
+    "services": [
+        {
+            "backend_version": 1,
+            "proxy": {
+                "hosts": [
+                    "localhost",
+                    "example.com"
+                ],
+                "backend": {
+                    "endpoint": "http://localhost:8081"
+                },
+                "proxy_rules": [
+                    {
+                        "http_method": "GET",
+                        "pattern": "/api/",
+                        "metric_system_name": "hits",
+                        "delta": 1
+                    }
+                ],
+                "policy_chain": [
+                    {
+                        "name": "apicast.policy.upstream",
+                        "configuration": {
+                            "rules": [
+                                {
+                                    "regex": "/",
+                                    "url": "http://echo-api.3scale.net"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "apicast.policy.default_credentials",
+                        "configuration": {
+                            "auth_type": "user_key",
+                            "user_key": "123"
+                        }
+                    },
+                    {
+                        "name": "apicast.policy.phase_logger",
+                        "configuration": {
+                            "log_level": "warn"
+                        }
+                    },
+                    {
+                        "name": "apicast.policy.apicast",
+                        "configuration": {}
+                    },
+                    {
+                        "name": "apicast.policy.url_rewriting",
+                        "configuration": {
+                            "commands": [
+                                {
+                                    "op": "sub",
+                                    "regex": "/hello",
+                                    "replace": "/goodbye"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
