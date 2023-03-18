@@ -3,7 +3,7 @@ version: '3'
 services:
   apicast:
     container_name: apicast
-    image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel8:3scale2.10
+    image: registry.redhat.io/3scale-amp2/apicast-gateway-rhel8:3scale2.13.0
     env_file:
       - .env
     volumes:
