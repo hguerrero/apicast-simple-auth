@@ -1,54 +1,59 @@
 {
-    "services": [
-        {
-            "backend_version": 1,
-            "proxy": {
-                "auth_user_key": "access_key",
-                "hosts": [
-                    "localhost",
-                    "example.com"
-                ],
-                "backend": {
-                    "endpoint": "http://localhost:8081"
-                },
-                "proxy_rules": [
-                    {
-                        "http_method": "GET",
-                        "pattern": "/",
-                        "metric_system_name": "hits",
-                        "delta": 1
-                    },
-                    {
-                        "http_method": "POST",
-                        "pattern": "/api/",
-                        "metric_system_name": "hits",
-                        "delta": 1
-                    }
-                ],
-                "policy_chain": [
-                    {
-                        "name": "simple_auth", "version":"1.0.0",
-                        "configuration": {
-                            "auth_type": "key"
-                        }
-                        },
-                        {
-                            "name": "apicast.policy.upstream",
-                            "configuration": {
-                                "rules": [
-                                    {
-                                        "regex": "/",
-                                        "url": "http://echo-api.3scale.net"
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "name": "apicast.policy.apicast",
-                            "configuration": {}
-                        }
-                ]
+  "services": [
+    {
+      "backend_version": 1,
+      "proxy": {
+        "auth_user_key": "access_key",
+        "hosts": [
+            "localhost", 
+            "example.com"
+        ],
+        "backend": {
+          "endpoint": "http://localhost:8081"
+        },
+        "proxy_rules": [
+          {
+            "http_method": "GET",
+            "pattern": "/",
+            "metric_system_name": "hits",
+            "delta": 1
+          },
+          {
+            "http_method": "POST",
+            "pattern": "/api/",
+            "metric_system_name": "hits",
+            "delta": 1
+          }
+        ],
+        "policy_chain": [
+          {
+            "name": "simple_auth",
+            "version": "1.0.0",
+            "configuration": {
+              "auth_type": "access_key",
+              "keys_file": "/opt/app/keys",
+              "keys": [
+                "xxx"
+              ]
             }
-        }
-    ]
+          },
+          {
+            "name": "apicast.policy.upstream",
+            "configuration": {
+              "rules": [
+                {
+                  "regex": "/",
+                  "url": "http://echo-api.3scale.net"
+                }
+              ]
+            }
+          },
+          {
+            "name": "apicast.policy.apicast",
+            "configuration": {}
+          }
+        ]
+      }
+    }
+  ]
 }
