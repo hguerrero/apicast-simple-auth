@@ -1,20 +1,30 @@
 # Standalone APIcast
 
-This is a PoC on how to implement a detached APIcast without a backend to do simple authentication.
+This is a proof-of-concept for implementing a detached APIcast without a backend to perform simple authentication.
 
-## Simple Authentication
+## Supported authentication patterns
 
-Currently there are 2 types available:
+This policy supports the following 3scale authentication patterns out of the box:
 
-- **none** - there is no authentication at all. All request are forwarded.
-- **key** - Authorized keys are stored in a file or the configuration. The policy checks the request credentials against those keys.
+- **Standard API Keys:** Single randomized strings or hashes acting as an identifier and a secret token
+
+## Simple Authentication Policy
+
+There are now two types available:
+
+- **none** - There is no authentication at all. All requests are routed.
+- **key** - The configuration or a dedicated file stores authorized keys. The policy compares the request credentials to those keys.
+
+**API key**
+
+By default, the name of the key parameter is `user_key`. You can change the value in your service configuration.
 
 ### Configuration
 
-The detached APIcast's behavior is configured via a `config.json` file. You must add the policy to the `policy chain` and set the authentication type using the `auth type` field. With the `keys file` option, you can indicate the location of a file containing your authorized keys; by default, the file path is `/opt/app/keys`. In the `keys` element of the policy configuration, you can also provide a list of keys. If both options exist, the policy will merge both lists and validate the credentials against the aggregate.
+A `config.json` file is used to configure the behavior of the detached APIcast. The policy must be added to the `policy chain`, and the authentication type must be specified in the `auth type` field. You can specify the location of a file containing your authorized keys using the `keys file` option; the default file path is `/opt/app/keys`. You can also give a list of keys in the policy configuration's `keys` field. If both alternatives are available, the policy will combine them and authenticate the credentials against the aggregate.
 
 You can check the [conf/config.json](conf/config.json) for an example.
 
 ### Local Environment
 
-If you want to give it a try, there is a `docker-compose.yaml` file with a working setup. 
+There is a [docker-compose.yaml](docker-compose.yaml) file with a working configuration if you want to give it a try.
